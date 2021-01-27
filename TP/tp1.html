@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div id="mon chrono">
+        <p>Countdown</p>
+    </div>
+</head>
+<body>
+    <button onclick="start()">Lancer le décompte</button>
+    <div id="bip" class="display"></div>
+        <button onclick="stopChrono();">Stop</button>
+        <button onclick="rezChrono();">RaZ</button>
+        <script>
+            var stopped = true;
+            var counter = 10;
+            var intervalId = null;
+            function finish()
+            {
+                clearInterval(intervalId);
+                document.getElementById("bip").innerHTML = "TERMINE!";
+                stopped = true;
+            }
+            function bip()
+            {
+                counter--;
+                if(counter <= 0)
+                {
+                    finish();
+                }
+                else
+                {
+                    document.getElementById("bip").innerHTML = counter + " secondes restantes";
+                }
+            }
+            function start()
+            {
+                if(stopped==true)
+                {
+                    /*un bip par seconde (1000ms) */
+                    stopped = false;
+                    intervalId = window.setInterval(bip, 1000);
+                }
+            }
+            function stopChrono()
+            {
+                clearInterval(intervalId);
+                stopped = true;
+            }
+            function rezChrono()
+            {
+                clearInterval(intervalId);
+                counter =10;
+                stopped = true;
+                document.getElementById("bip").innerHTML = "";
+            }
+        </script>
+    </body>
+</body>
+</html>

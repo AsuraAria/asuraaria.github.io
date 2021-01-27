@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+</head>
+<body>
+<!--<button onclick="start()">Lancer le mouvement</button>-->
+<button onclick="stopMvt();">Stop</button>
+<button onclick="rezMvt();">RaZ</button>
+<div id="canvasContainer">
+    <canvas id="myCanvas" width="1080px"></canvas>
+</div>
+
+<script>
+    var intervalId = null;
+    var c = document.getElementById("myCanvas");
+    var squaresContainer = [];
+    window.onload=init();
+    var timeouts = [];
+
+    function init()
+
+    {
+        for(i = 0; i < 10; i++)
+    {
+        squaresContainer[i] = 
+    [
+            c.getContext("2d"), //square
+            0, //x
+            11*i, //y
+            true //stop
+    ];
+        squaresContainer[i][0].fillStyle = 'red';
+        squaresContainer[i][0].beginPath(); //start draw
+        squaresContainer[i][0].fillRect(squaresContainer[i][1], squaresContainer[i][2], 10, 10);
+        squaresContainer[i][0].stroke(); //draw
+        setTimeout(start,1000);
+    }
+    }
+    function bip()
+    {
+        for (p of squaresContainer)
+        {
+            if (!p[3])
+            {
+                p[0].clearRect(p[1], p[2], 10, 10);
+                p[1]+=1;
+                p[0].beginPath();
+                p[0].fillRect(p[1], p[2], 10, 10);
+                p[0].stroke();
+            }
+        }
+    }
+    function start()
+    {
+        /*un bip par 0.1 seconde (100ms) */
+        squaresContainer[0][3]=false;
+        intervalId = window.setInterval(bip, 10);
+        for(j=0; j < 10; j++)
+        {
+            test(j);}
+    }
+    function test(inter)
+    {
+        timeouts.push(
+        setTimeout(function()
+            {squaresContainer[inter][3]=false;}, inter*1000));
+    }  
+    function stopMvt()
+    {
+        clearInterval(intervalId);
+        for (p of squaresContainer)
+        {
+            p[3]==true;
+        }
+    }
+    function rezMvt()
+    {
+        for (var i = 0; i < timeouts.length; i++) {
+        clearTimeout(timeouts[i]);
+        }
+        //quick reset of the timer array you just cleared
+        timeouts = [];
+        for (p of squaresContainer)
+        {        
+            p[0].clearRect(p[1],p[2], 10, 10)
+        }
+        clearInterval(intervalId);
+        init();
+    }
+
+</script>
+</body>
+</body>
+</html>

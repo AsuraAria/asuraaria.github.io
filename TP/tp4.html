@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="stopMvt();">Stop</button>
+<button onclick="rezMvt();">RaZ</button>
+<div id="canvasContainer">
+    <canvas id="myCanvas" width="1080px"></canvas>
+</div>
+
+<script>
+    var stopped = true;
+    var sqarre1 = false;
+    var sqarre2 = false;
+    var sqarre3 = false;
+    var intervalId = null;
+    var c = document.getElementById("myCanvas");
+    var ctx1 = c.getContext("2d");
+    var ctx2 = c.getContext("2d");
+    var ctx3 = c.getContext("2d");
+    var x1 = 0;
+    var y1 = 0;
+    var x2 = 0;
+    var y2 = 0;
+    var x3 = 0;
+    var y3 = 0;
+
+
+
+    function init()
+    {
+        x1 = 0;
+        y1 = 0;
+        x2 = 0;
+        y2 = 10;
+        x3 = 0;
+        y3 = 20;
+        ctx1.fillStyle = "red";
+        ctx2.fillStyle = "red";
+        ctx3.fillStyle = "red";
+        ctx1.beginPath();
+        ctx1.fillRect(x1, y1, 10, 10);
+        ctx1.stroke();
+        ctx2.beginPath();
+        ctx2.fillRect(x2, y2, 10, 10);
+        ctx2.stroke();
+        ctx3.beginPath();
+        ctx3.fillRect(x3, y3, 10, 10);
+        ctx3.stroke();
+    }
+    function bip()
+    {
+        if(!stopped)
+        {
+            if (sqarre1) {
+                ctx1.clearRect(x1, y1, 10, 10);
+                x1 += 10;
+                y1 += 0;
+                ctx1.beginPath();
+                ctx1.fillRect(x1, y1, 10, 10);
+                ctx1.stroke();
+            }
+            if (sqarre2) {
+                ctx2.clearRect(x2, y2, 10, 10);
+                x2 += 10;
+                y2 += 0;
+                ctx2.beginPath();
+                ctx2.fillRect(x2, y2, 10, 10);
+                ctx2.stroke();
+            }
+            if (sqarre3) {
+                ctx3.clearRect(x3, y3, 10, 10);
+                x3 += 10;
+                y3 += 0;
+                ctx3.beginPath();
+                ctx3.fillRect(x3, y3, 10, 10);
+                ctx3.stroke();
+            }
+        }
+    }
+    function start()
+    {
+        if(!stopped)
+        {
+            if(!sqarre1)
+            {
+                ctx1.fillStyle = "blue";
+                sqarre1=true;
+            }
+            else
+            {
+                if(!sqarre2)
+                {
+                    ctx2.fillStyle = "blue";
+                    sqarre2=true;
+                }
+                else
+                {
+                    if (!sqarre3)
+                    {
+                        ctx3.fillStyle = "blue";
+                        sqarre3=true;
+                    }
+                }
+            }
+        }
+        if(stopped && !sqarre1 && !sqarre2 && !sqarre3)
+        {
+            /*un bip par 0.1 seconde (100ms) */
+            ctx1.fillStyle = "blue";
+            sqarre1=true;
+            stopped = false;
+            intervalId = window.setInterval(bip, 100);
+        }
+    }
+    function stopMvt()
+    {
+        clearInterval(intervalId);
+        stopped = true;
+    }
+    function rezMvt()
+    {
+        clearInterval(intervalId);
+        stopped = true;
+        ctx1.clearRect(x1, y1, 10, 10);
+        ctx2.clearRect(x2, y2, 10, 10);
+        ctx3.clearRect(x3, y3, 10, 10);
+        sqarre1 = false;
+        sqarre2 = false;
+        sqarre3 = false;
+        multiStart();
+    }
+    function multiStart()
+    {
+        init();
+        //2s d'attente
+        setTimeout( start, 2000);
+        //+ 1s
+        setTimeout( start, 3000);
+        //+ 4s
+        setTimeout( start, 7000);
+    }
+    window.onload = multiStart();
+</script>
+</body>
+</body>
+</html>
