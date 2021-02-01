@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
-<meta charset="UTF-8">
-<title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <button onclick="start()">Lancer le mouvement</button>
@@ -56,6 +56,9 @@
         ctx.fillRect(x, y, 10, 10);
         ctx.stroke();
     }
+    window.onload = function autostart() {
+        setTimeout( start, 2000);
+    };
 </script>
 </body>
 </body>

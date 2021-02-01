@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="canvasContainer">
+    <canvas id="myCanvas" width="600px" height="600px"></canvas>
+</div>
+</body>
+<script>
+    var stopped = true;
+    var intervalId = null;
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.fillStyle = "red";
+    var x = 0;
+    var y = 0;
+    ctx.beginPath();
+    ctx.fillRect(x, y, 50, 50);
+    ctx.stroke();
+
+    class Square
+    {
+		constructor(context,width,height,x,y){
+			this.context=context.getContext;
+			this.width=width;
+			this.height=height;
+			this.x=x;
+			this.y=y;
+            this.hasStarted=false;
+            this.context.fillStyle ="red";
+            
+    }
+    }
+    sq1 = new Square(c,50,50,0,0)
+    function bip()
+    {
+            ctx.clearRect(x, y, 50, 50);
+            x+=10;
+            y+=0;
+            ctx.beginPath();
+            ctx.fillRect(x, y, 50, 50);
+            ctx.stroke();
+            if(x==550+50)
+            {
+                rezMvt();
+                start();
+            }
+    }
+    function start()
+    {
+        if(stopped==true)
+        {
+            stopped = false;
+            intervalId = window.setInterval(bip, 100);
+        }
+    }
+    function rezMvt()
+    {
+        clearInterval(intervalId);
+        stopped = true;
+        ctx.clearRect(x, y, 50, 50);
+        x=0;
+        y=0;
+        ctx.beginPath();
+        ctx.fillRect(x, y, 50, 50);
+        ctx.stroke();
+    }
+    window.onload = start();
+</script>
+</html>

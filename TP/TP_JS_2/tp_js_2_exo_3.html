@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="canvasContainer">
+    <canvas id="myCanvas" width="600px" height="600px"></canvas>
+</div>
+</body>
+<script>
+    var stopped = true;
+    var intervalId = null;
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.fillStyle = "red";
+    var x = 0;
+    var y = 0;
+    ctx.beginPath();
+    ctx.fillRect(x, y, 50, 50);
+    ctx.stroke();
+    function bip()
+    {
+            ctx.clearRect(x, y, 50, 50);
+            x+=10;
+            y+=0;
+            ctx.beginPath();
+            ctx.fillRect(x, y, 50, 50);
+            ctx.stroke();
+            if(x==550+50)
+            {
+                rezMvt();
+                start();
+            }
+    }
+    function start()
+    {
+        if(stopped==true)
+        {
+            /*un bip par 0.1 seconde (100ms) */
+            stopped = false;
+            intervalId = window.setInterval(bip, 100);
+        }
+    }
+    function rezMvt()
+    {
+        clearInterval(intervalId);
+        stopped = true;
+        ctx.clearRect(x, y, 50, 50);
+        x=0;
+        y=0;
+        ctx.beginPath();
+        ctx.fillRect(x, y, 50, 50);
+        ctx.stroke();
+    }
+    window.onload = function delayedStart()
+    {
+    setTimeout( start, 2000);
+    };
+</script>
+</html>
+
+
